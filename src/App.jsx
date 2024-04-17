@@ -1,9 +1,14 @@
+import { useState } from "react";
 import config from "./config/config";
+// import {useDispatch} from 'react-redux'
+import authService from '../src/appwrite/auth'
+
 
 
 function App() {
-
-console.log(config.appwriteProjectId);
+   const [loading, setLoading] = useState(true)
+  //  const dispatch = useDispatch();
+ 
   return (
 <>
 <h1>A mega project using appwrite</h1>
