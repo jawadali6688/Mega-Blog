@@ -11,7 +11,7 @@ function App() {
  
   return (
 <>
-<h1>A mega project using appwrite</h1>
+<h1 className="text-white">A mega project using appwrite</h1>
 </>
   )
 }
