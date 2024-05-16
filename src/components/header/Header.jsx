@@ -4,7 +4,7 @@ import {Link} from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import {useNavigate} from 'react-router-dom'
 function Header() {
-  const authStatus = useSelector((state) => state.auth.status)
+  const authStatus = useSelector((state) => state.authSlice.status)
   const navigate = useNavigate();
   const navItems = [
     {
@@ -43,8 +43,10 @@ function Header() {
           </Link>
         </div>
         <ul className='flex ml-auto'>
-          {navItems.map((item, index)=> { item.active ? <li> <button
-           key={index} 
+          {navItems.map((item, index) =>  { 
+            return (
+              item.active ? <li key={index} > <button
+           
            onClick={()=> navigate(item.slug)}
            className='inline-bock px-6 py-2 duration-200 hover:bg-blue-100 rounded-full'
           >
@@ -52,11 +54,13 @@ function Header() {
           </button>
           </li>
           :
-           null})}
+           null
+            )
+          })}
         </ul>
         {
           authStatus && (
-            <li>
+            <li className='list-none cursor-pointer'>
               <LogoutBtn/>
             </li>
           )
