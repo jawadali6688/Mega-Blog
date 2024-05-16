@@ -8,25 +8,24 @@ export class Service {
     constructor(){
         this.client
         .setEndpoint(config.appwriteUrl)
-        .setEndpoint(config.appwriteProjectId)
-        this.databases = new Databases(this.client)
-        this.bucket = new Storage(this.client)
+        .setProject(config.appwriteProjectId); // Correct method name
+    this.databases = new Databases(this.client);
+    this.bucket = new Storage(this.client);
     }
 
-    async createPost({title, slug, content, featuredImage, status, userId}){
+    async createPost({ title, slug, content, featuredImage, status, userId }) {
         try {
-           return this.databases.createDocument(
-            config.appwriteUrl,
-            config.appwriteCollectionId,
-            slug,
-            {
-                title,
-                content,
-                featuredImage,
-                status,
-                userId
-            }
-           )
+            return this.databases.createDocument(
+                config.appwriteDatabaseId, // Use database ID here
+                config.appwriteCollectionId,
+                {
+                    title,
+                    content,
+                    featuredImage,
+                    status,
+                    userId,
+                }
+            );
         } catch (error) {
             console.log("There is Error while Create POST ::", error);
         }
@@ -89,19 +88,19 @@ export class Service {
         }
     }
 
-    async uploadFile(file){
+    async uploadFile(file) {
         try {
-            this.bucket.createFile(
+            return this.bucket.createFile( // Return the result of createFile
                 config.appwriteBucketId,
                 ID.unique(),
                 file
-            )
-            return true
+            );
         } catch (error) {
             console.log("There is Error while uploading the File ::", error);
-            return false
+            return false;
         }
     }
+
 
     async deleteFile(fileId){
         try {
